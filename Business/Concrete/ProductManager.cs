@@ -32,9 +32,9 @@ namespace Business.Concrete
             _productDal = productDal;
             _categoryService = categoryService;
         }
-        [SecuredOperation("product.add,admin")]
+        //[SecuredOperation("product.add,admin")]
         [ValidationAspect(typeof(ProductValidator))]
-        [CacheRemoveAspect("IProductService.Get")]
+        //[CacheRemoveAspect("Business.Abstract.IProductService.GetAll()")]
         public IResult Add(Product product)
         {
             //Aynı ürün eklenemez
@@ -53,6 +53,7 @@ namespace Business.Concrete
 
 
         }
+
         [CacheAspect] //key,value
         public IDataResult<List<Product>> GetAll()
         {

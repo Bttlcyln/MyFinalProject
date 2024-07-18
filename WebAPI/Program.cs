@@ -19,7 +19,7 @@ var builder = WebApplication.CreateBuilder(args);
 //
 Host.CreateDefaultBuilder(args);
 
-
+builder.Services.AddCors();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 // Add services to the container.
 builder.Services.AddControllers();
@@ -72,11 +72,14 @@ if (app.Environment.IsDevelopment())
 
 }
 
-app.UseAuthentication();
+app.ConfigureCustomExceptionMiddleware();
+
+app.UseCors(builder =>builder.WithOrigins("http://localhost:4200").AllowAnyHeader());
 
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+app.UseAuthentication();
 
 app.MapControllers();
 
